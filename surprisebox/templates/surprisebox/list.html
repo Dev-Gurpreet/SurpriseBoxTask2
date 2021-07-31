@@ -1,0 +1,38 @@
+{% extends 'surprisebox/base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+          <b>USER NAME</b>
+        </div>
+        <div class="col">
+          <b>SURPRISE BOX RESULT</b>
+        </div>
+        <div class="col">
+            <b>Visit Position</b>
+          </div>
+      </div>
+    {% for user in users %}
+    <div class="row">
+      <div class="col">
+        {{user.username}}
+      </div>
+      <div class="col">
+        {%if user.is_winner%}
+            Winner
+        {% else %}
+            Losser
+        {% endif %}
+      </div>
+      <div class="col">
+        {{user.id}}
+      </div>
+    </div>
+    {% endfor %} 
+  </div>
+
+
+
+	</div>
+{% endblock content %}

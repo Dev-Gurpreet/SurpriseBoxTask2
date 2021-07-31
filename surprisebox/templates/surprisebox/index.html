@@ -1,0 +1,18 @@
+{% extends 'surprisebox/base.html' %}
+{% block content %}
+
+
+    
+    <input id="username" type="text" name="username" placeholder="Add Username">
+    <input type="button" onclick="submitusername();" value="submit">
+
+<br>
+
+<script type="text/javascript">
+    function submitusername() {
+        var name = document.getElementById('username').value;
+        window.location.href='/user-detail/'+ name + '/';
+    }
+
+</script>
+{% endblock content %}

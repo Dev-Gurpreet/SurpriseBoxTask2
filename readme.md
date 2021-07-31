@@ -1,0 +1,1 @@
+visitor_surprise_list is hard coded in views.py in userDetail function.
