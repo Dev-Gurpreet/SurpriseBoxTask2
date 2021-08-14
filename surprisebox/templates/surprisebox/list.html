@@ -1,38 +1,52 @@
 {% extends 'surprisebox/base.html' %}
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-          <b>USER NAME</b>
-        </div>
-        <div class="col">
-          <b>SURPRISE BOX RESULT</b>
-        </div>
-        <div class="col">
-            <b>Visit Position</b>
-          </div>
-      </div>
-    {% for user in users %}
-    <div class="row">
-      <div class="col">
-        {{user.username}}
-      </div>
-      <div class="col">
-        {%if user.is_winner%}
-            Winner
-        {% else %}
-            Losser
-        {% endif %}
-      </div>
-      <div class="col">
-        {{user.id}}
-      </div>
+<div class="container" id="list-wrapper">
+  <div class="row">
+    <div class="col">
+      <b>USER NAME</b>
     </div>
-    {% endfor %} 
+    <div class="col">
+      <b>SURPRISE BOX RESULT</b>
+    </div>
+    <div class="col">
+      <b>Visit Position</b>
+    </div>
   </div>
+</div>
 
-
-
-	</div>
+  <script>
+    var wrapper = document.getElementById('list-wrapper')
+    var url ='http://127.0.0.1:8000/userlistapi/'
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET",url,true);
+    xhr.responseType='json';
+    xhr.send();
+    xhr.onload = function(){
+      let list = xhr.response;
+      let result = ''
+		  for (var i in list){
+        if (list[i].is_winner == true){
+						result = 'Winner'
+					}
+          else{
+            result = 'Loser'
+          }
+        var item = `
+        <div class="row" id="data-row-${i}">
+          <div class="col" id="data-row-${i}-col-1">
+            ${list[i].username}
+          </div>
+          <div class="col" id="data-row-${i}-col-2">
+            ${result}
+          </div>
+          <div class="col" id="data-row-${i}-col-3">
+            ${list[i].id}
+          </div>
+        </div>
+        `
+        wrapper.innerHTML += item
+      }
+    }
+  </script>
 {% endblock content %}

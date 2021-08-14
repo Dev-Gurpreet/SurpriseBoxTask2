@@ -5,4 +5,4 @@ class UsersSerializer(ModelSerializer):
 
     class Meta:
         model = Users
-        fields = ['id', 'username', 'is_winner']
+        fields = '__all__'

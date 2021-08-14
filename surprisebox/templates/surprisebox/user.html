@@ -1,10 +1,41 @@
 {% extends 'surprisebox/base.html' %}
 {% block content %}
-<h1>Surprise Visit Numbers : {{visit_Surprise_Numbers}} (Hard Coded in views.py)</h1><br><br>
 
-<h3>Total Visitor Count : {{visitor_count}} </h3><br><br>
-      
-<h1>{{message}}</h1>
+<input type="hidden" id="username" value="{{username}}">
+<div id="userDetail-wrapper"></div>
 
-
+<script>
+  let wrapper = document.getElementById('userDetail-wrapper')
+  let xhr = new XMLHttpRequest();
+  let username = document.getElementById('username').value
+  let url ='http://127.0.0.1:8000/userdetailapi/'+username+'/';
+  xhr.open("GET",url,true);
+  xhr.responseType='json';
+  xhr.send();
+  xhr.onload = function(){
+    let responseObj = xhr.response;
+    if (responseObj.is_winner == true){
+			result = 'Winner'
+		}
+    else{
+      result = 'Loser'
+  }
+  var item = `
+        <h3>Surprise visit numbers : ${responseObj.visit_Surprise_Numbers} (Hard Coded in views.py)</h3><br><br>
+        <div class="row" id="Details">
+          <div class="col" id="data-col-1">
+            <h3>USER :  ${responseObj.username}</h3>
+          </div>
+          <div class="col" id="data-col-2">
+            <h3>SURPRISE BOX RESULT : ${result}</h3>
+          </div>
+          <div class="col" id="data-col-3">
+            <h3>Total Number of Visitors:  ${responseObj.visitor_count}</h3>
+          </div>
+        </div>
+        <br>
+        `
+      wrapper.innerHTML += item
+  }
+  </script>
 {% endblock content %}
